@@ -24,7 +24,7 @@ app.post("/create-checkout-session", async (req, res) => {
           product_data: {
             name: product.title,
           },
-          unit_amount: product.price * 1000,
+          unit_amount: product.price * 100,
         },
         quantity: 1,
       },
