@@ -23,7 +23,6 @@ const phonecaseSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true,
   },
   img: {
     type: String,
@@ -39,4 +38,4 @@ phonecaseSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("Phonecase", phonecaseSchema);
+module.exports = mongoose.model("phonecase", phonecaseSchema);

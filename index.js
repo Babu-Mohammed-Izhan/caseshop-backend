@@ -37,13 +37,15 @@ app.post("/create-checkout-session", async (req, res) => {
   res.json({ url: session.url });
 });
 
-app.get("/api/phoncases", async (req, res) => {
+app.get("/api/phoncase", async (req, res) => {
   const data = await Phonecase.find({});
-  console.log(data);
+
+  res.json(data);
 });
 
-app.post("/api/phoncases", async (req, res) => {
+app.post("/api/phoncase", async (req, res) => {
   const body = req.body;
+  console.log(body);
   if (body.title === null) {
     return response.status(400).json({
       error: "title is missing",
@@ -54,20 +56,20 @@ app.post("/api/phoncases", async (req, res) => {
       error: "price is missing",
     });
   }
-  if (body.imgUrl === null) {
+  if (body.img === null) {
     return response.status(400).json({
       error: "img is missing",
     });
   }
 
-  const phoncase = new Phoncase({
+  const phonecase = new Phonecase({
     title: body.title,
-    number: body.number,
-    imgUrl: body.imgUrl,
+    price: body.price,
+    img: body.img,
   });
 
-  const response = await phoncase.save();
-  console.log(response);
+  const response = await phonecase.save();
+  res.json(response);
 });
 
 app.listen(3001, () => {
