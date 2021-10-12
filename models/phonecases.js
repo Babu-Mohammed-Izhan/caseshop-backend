@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const url = "url";
+const url =
+  "mongodb+srv://izhan:izhan@cluster0.airbl.mongodb.net/caseyDatabase?retryWrites=true&w=majority";
 
 mongoose
   .connect(url, {
@@ -24,7 +25,7 @@ const phonecaseSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  imgUrl: {
+  img: {
     type: String,
     required: true,
   },
