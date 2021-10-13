@@ -1,3 +1,4 @@
+require("dotenv").config();
 var cors = require("cors");
 const express = require("express");
 const app = express();
@@ -5,11 +6,7 @@ app.use(cors());
 app.use(express.json());
 const Phonecase = require("./models/phonecases");
 
-const stripe = require("stripe")(
-  "sk_test_51JHMrwSHAZAO2kf44c5ZXpFnhbZjODG9Dasi2bc5Wi69XwUOOy4ZsCORo6KjRBXKF4S2AJJI3WemgFR2FTr8oWmt00IkZjRvB3"
-);
-
-const YOUR_DOMAIN = "http://localhost:3000/products";
+const stripe = require("stripe")(`${process.env.STRIPE_PRIVATE_KEY}`);
 
 app.get("/", (req, res) => {
   res.json("this is a website");
@@ -21,21 +18,21 @@ app.post("/create-checkout-session", async (req, res) => {
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    line_items: [
-      {
+    line_items: req.body.items.map((item) => {
+      return {
         price_data: {
           currency: "inr",
           product_data: {
-            name: product.title,
+            name: item.title,
           },
-          unit_amount: product.price * 100,
+          unit_amount: item.price * 100,
         },
-        quantity: 1,
-      },
-    ],
+        quantity: item.quantity,
+      };
+    }),
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}?success=true`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    success_url: `${process.env.DOMAIN}/success`,
+    cancel_url: `${process.env.DOMAIN}/canceled`,
   });
 
   res.json({ url: session.url });
