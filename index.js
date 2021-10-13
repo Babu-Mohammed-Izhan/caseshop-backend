@@ -11,6 +11,10 @@ const stripe = require("stripe")(
 
 const YOUR_DOMAIN = "http://localhost:3000/products";
 
+app.get('/', (req, res) => {
+res.json('this is a website')
+});
+
 app.post("/create-checkout-session", async (req, res) => {
   const product = req.body;
   console.log(product);
