@@ -76,6 +76,10 @@ app.post("/api/phoncase", async (req, res) => {
   res.json(response);
 });
 
-app.listen(3001, () => {
-  console.log("Server is runnung on PORT 3001");
+app.listen(process.env.PORT || 3001, () => {
+  console.log(
+    "Express server listening on port %d in %s mode",
+    this.address().port,
+    app.settings.env
+  );
 });
