@@ -13,12 +13,11 @@ app.get("/", (req, res) => {
 });
 
 app.post("/create-checkout-session", async (req, res) => {
-  const product = req.body;
-  console.log(product);
-
+  const products = req.body;
+  console.log(products);
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    line_items: req.body.items.map((item) => {
+    line_items: products.map((item) => {
       return {
         price_data: {
           currency: "inr",
